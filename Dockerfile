@@ -1,4 +1,4 @@
-FROM jinweilin/java:1.8.0_72
+FROM jinweilin/java:8
 
 ENV CATALINA_HOME /usr/local/jboss-web
 ENV PATH $CATALINA_HOME/bin:$PATH
@@ -18,8 +18,11 @@ RUN set -x \
 	&& rm bin/*.bat \
 	&& rm jboss-web.tar.gz*
 
-ADD server.xml $CATALINE_HOME/conf/server.xml
-ADD tomcat-users.xml $CATALINE_HOME/conf/tomcat-users.xml
+COPY edb-jdbc16.jar /usr/local/jboss-web/lib/edb-jdbc16.jar
+COPY kaiu.ttf /usr/local/jboss-web/lib/kaiu.ttf
+COPY mysql-connector-java-5.1.19-bin.jar /usr/local/jboss-web/lib/mysql-connector-java-5.1.19-bin.jar
+COPY server.xml /usr/local/jboss-web/conf/server.xml
+COPY tomcat-users.xml /usr/local/jboss-web/conf/tomcat-users.xml
 VOLUME ["/usr/local/jboss-web/logs","/opt/war","/home/art"]
 
 #RUN ["rm", "-fr", "$CATALINE_HOME/webapps/ROOT"]
