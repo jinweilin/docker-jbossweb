@@ -1,5 +1,9 @@
 FROM jinweilin/java:8
 
+RUN cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
+    echo 'Asia/Taipei' > /etc/timezone && date
+RUN sed -e 's;UTC=yes;UTC=no;' -i /etc/default/rcS
+
 ENV CATALINA_HOME /usr/local/jboss-web
 ENV PATH $CATALINA_HOME/bin:$PATH
 RUN mkdir -p "$CATALINA_HOME"
